@@ -4,4 +4,4 @@ workflows:
     subclass: WDL
     primaryDescriptorPath: /CopyFilesFromS3ToGCP.wdl
     testParameterFiles:
-    -  /CopyFilesFromS3ToGCP.inputs.json
+    - /CopyFilesFromS3ToGCP.inputs.json
