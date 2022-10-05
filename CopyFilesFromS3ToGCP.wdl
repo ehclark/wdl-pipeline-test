@@ -9,6 +9,8 @@ task CopyFilesFromS3ToGCP {
 
     command {
         gcloud version
+        gcloud info
+        gcloud auth list
     }
 
     runtime {
