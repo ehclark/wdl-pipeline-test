@@ -11,6 +11,7 @@ task CopyFilesFromS3ToGCP {
         gcloud version
         gcloud info
         gcloud auth list
+        gcloud secrets versions access latest --secret="secret-id" --out-file="~/.config/gcloud/wasabi-s3-token"
     }
 
     runtime {
