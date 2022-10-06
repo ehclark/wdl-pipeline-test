@@ -1,0 +1,5 @@
+{
+    "DummyFASTQToVCFWorkflow.fastq_files": ["List of FASTQ files"],
+    "DummyFASTQToVCFWorkflow.source_vcf": "Source VCF file",
+    "DummyFASTQToVCFWorkflow.output_vcfname": "Output VCF file"
+}

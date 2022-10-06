@@ -5,3 +5,8 @@ workflows:
     primaryDescriptorPath: /CopyFilesFromS3ToGCP.wdl
     testParameterFiles:
     - /CopyFilesFromS3ToGCP.inputs.json
+  - name: DummyFASTQToVCFWorkflow
+    subclass: WDL
+    primaryDescriptorPath: /DummyFASTQToVCF.wdl
+    testParameterFiles:
+    - /DummyFASTQToVCF.inputs.json
