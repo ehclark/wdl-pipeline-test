@@ -8,15 +8,15 @@ task DummyFASTQToVCF {
         String output_vcfname
     }
 
-    command {
+    command <<<
         set -euxo pipefail
-        for file in ~{sep=' ' fastq_files}
+        for x in ~{sep=' ' fastq_files}
         do
-            [ ! -f "${file}" ] && exit 1
+            [ ! -f "${x}" ] && exit 1
         done
 
         cp "~{source_vcf}" "~{output_vcfname}"
-    }
+    >>>
 
     runtime {
         docker: "bash:latest"
