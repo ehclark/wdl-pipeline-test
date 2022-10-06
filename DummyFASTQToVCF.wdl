@@ -18,6 +18,10 @@ task DummyFASTQToVCF {
         cp "~{source_vcf}" "~{output_vcfname}"
     >>>
 
+    output {
+        File output_vcf = output_vcfname
+    }
+
     runtime {
         docker: "ubuntu:latest"
         memory: "4GB"
@@ -44,4 +48,8 @@ workflow DummyFASTQToVCFWorkflow {
             source_vcf = source_vcf, 
             output_vcfname = output_vcfname 
         }
+
+    output {
+        File output_vcf = DummyFASTQToVCF.output_vcf
+    }
 }
