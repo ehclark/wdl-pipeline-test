@@ -19,7 +19,7 @@ task DummyFASTQToVCF {
     >>>
 
     runtime {
-        docker: "bash:latest"
+        docker: "ubuntu:latest"
         memory: "4GB"
     }
 }
