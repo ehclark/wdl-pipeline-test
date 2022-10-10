@@ -88,18 +88,13 @@ task ExportFilesToWasabi {
         echo "" >> ~/.boto
         echo "s3_host = s3.us-east-1.wasabisys.com" >> ~/.boto
         rm /tmp/accesskey /tmp/secretkey
-        # for each input file
-        filename=$(basename "~{vcf_file}")
-        gsutil cp "~{vcf_file}" "~{output_dir}/$filename"
+        # copy the file to wasabi
+        gsutil cp "~{vcf_file}" "~{output_dir}"
     >>>
 
     runtime {
         docker: "google/cloud-sdk:latest"
         memory: "4GB"
-    }
-
-    output {
-        Array[File] fastq_files_out = glob("*.fastq")
     }
 }
 
