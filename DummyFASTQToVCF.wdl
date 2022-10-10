@@ -8,8 +8,8 @@ task ImportFilesFromWasabi {
     command <<<
         set -euxo pipefail
         # get the wasabi api secrets
-        gcloud secrets versions access --secret=mgb-lmm-wasabi-access-key --out-file=/tmp/accesskey
-        gcloud secrets versions access --secret=mgb-lmm-wasabi-secret-key --out-file=/tmp/secretkey
+        gcloud secrets versions access "latest" --secret=mgb-lmm-wasabi-access-key --out-file=/tmp/accesskey
+        gcloud secrets versions access "latest" --secret=mgb-lmm-wasabi-secret-key --out-file=/tmp/secretkey
         # construct the .boto file
         echo "[Credentials]" > ~/.boto
         echo -n "aws_access_key_id = " >> ~/.boto
