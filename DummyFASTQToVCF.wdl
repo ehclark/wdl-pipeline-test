@@ -8,8 +8,11 @@ task ImportFilesFromWasabi {
     command <<<
         set -euxo pipefail
         # get the wasabi api secrets
+        TERRA_PROJECT_ID=$(gcloud config get project)
+        gcloud config set project "mgb-lmm-gcp-infrast-1651079146"
         gcloud secrets versions access "latest" --secret=mgb-lmm-wasabi-access-key --out-file=/tmp/accesskey
         gcloud secrets versions access "latest" --secret=mgb-lmm-wasabi-secret-key --out-file=/tmp/secretkey
+        gcloud config set project "${TERRA_PROJECT_ID}"
         # construct the .boto file
         echo "[Credentials]" > ~/.boto
         echo -n "aws_access_key_id = " >> ~/.boto
@@ -25,7 +28,7 @@ task ImportFilesFromWasabi {
         do
             if [[ "$file" = s3://* ]]
             then
-                filename=`basename "$file"`
+                filename=$(basename "$file")
                 gsutil cp -n "$file" "$filename"
                 echo "$filename" >> importedfilelist.txt
             else
