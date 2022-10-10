@@ -26,7 +26,7 @@ task ImportFilesFromWasabi {
             if [[ "$file" = s3://* ]]
             then
                 filename=`basename "$file"`
-                gsutil cp "$file" "$filename"
+                gsutil cp -n "$file" "$filename"
                 echo "$filename" >> importedfilelist.txt
             else
                 echo "$file" >> importedfilelist.txt
