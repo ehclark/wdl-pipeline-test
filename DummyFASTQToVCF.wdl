@@ -30,10 +30,11 @@ task ImportFilesFromWasabi {
             then
                 filename=$(basename "$file")
                 gsutil cp -n "$file" "$filename"
-                ls -al
-                echo "$filename" >> importedfilelist.txt
+                echo -n "$filename" >> importedfilelist.txt
+                echo -n " " >> importedfilelist.txt
             else
-                echo "$file" >> importedfilelist.txt
+                echo -n "$file" >> importedfilelist.txt
+                echo -n " " >> importedfilelist.txt
             fi
         done
     >>>
@@ -44,7 +45,7 @@ task ImportFilesFromWasabi {
     }
 
     output {
-        Array[File] fastq_files_out = read_lines("importedfilelist.txt")
+        Array[File] fastq_files_out = glob(read_string("importedfilelist.txt"))
     }
 }
 
