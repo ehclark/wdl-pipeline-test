@@ -67,6 +67,42 @@ task DummyFASTQToVCF {
     }
 }
 
+task ExportFilesToWasabi {
+    input {
+        String output_dir
+        File vcf_file
+    }
+
+    command <<<
+        set -euxo pipefail
+        # get the wasabi api secrets
+        gcloud --project="mgb-lmm-gcp-infrast-1651079146" secrets versions access "latest" --secret=mgb-lmm-wasabi-access-key --out-file=/tmp/accesskey
+        gcloud --project="mgb-lmm-gcp-infrast-1651079146" secrets versions access "latest" --secret=mgb-lmm-wasabi-secret-key --out-file=/tmp/secretkey
+        # construct the .boto file
+        echo "[Credentials]" > ~/.boto
+        echo -n "aws_access_key_id = " >> ~/.boto
+        cat /tmp/accesskey >> ~/.boto
+        echo "" >> ~/.boto
+        echo -n "aws_secret_access_key = " >> ~/.boto
+        cat /tmp/secretkey >> ~/.boto
+        echo "" >> ~/.boto
+        echo "s3_host = s3.us-east-1.wasabisys.com" >> ~/.boto
+        rm /tmp/accesskey /tmp/secretkey
+        # for each input file
+        filename=$(basename "~{vcf_file}")
+        gsutil cp "~{vcf_file}" "~{output_dir}/$filename"
+    >>>
+
+    runtime {
+        docker: "google/cloud-sdk:latest"
+        memory: "4GB"
+    }
+
+    output {
+        Array[File] fastq_files_out = glob("*.fastq")
+    }
+}
+
 workflow DummyFASTQToVCFWorkflow {
 
     meta {
@@ -79,6 +115,7 @@ workflow DummyFASTQToVCFWorkflow {
         Array[String] fastq_files
         File source_vcf
         String output_vcfname
+        String output_dir
     }
 
     call ImportFilesFromWasabi {
@@ -91,6 +128,12 @@ workflow DummyFASTQToVCFWorkflow {
             fastq_files = ImportFilesFromWasabi.fastq_files_out, 
             source_vcf = source_vcf, 
             output_vcfname = output_vcfname 
+    }
+
+    call ExportFilesToWasabi {
+        input:
+            output_dir = output_dir,
+            vcf_file = DummyFASTQToVCF.output_vcf
     }
 
     output {
