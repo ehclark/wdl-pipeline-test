@@ -1,5 +1,49 @@
 version 1.0
 
+task ImportFilesFromWasabi {
+    input {
+        Array[String] fastq_files_in
+    }
+
+    command <<<
+        set -euxo pipefail
+        # get the wasabi api secrets
+        gcloud secrets versions access --secret=mgb-lmm-wasabi-access-key --out-file=/tmp/accesskey
+        gcloud secrets versions access --secret=mgb-lmm-wasabi-secret-key --out-file=/tmp/secretkey
+        # construct the .boto file
+        echo "[Credentials]" > ~/.boto
+        echo -n "aws_access_key_id = " >> ~/.boto
+        cat /tmp/accesskey >> ~/.boto
+        echo "" >> ~/.boto
+        echo "aws_secret_access_key = " >> ~/.boto
+        cat /tmp/secretkey >> ~/.boto
+        echo "" >> ~/.boto
+        echo "s3_host = s3.us-east-1.wasabisys.com" >> ~/.boto
+        rm /tmp/accesskey /tmp/secretkey
+        # for each input file
+        for file in ~{sep=' ' fastq_files_in}
+        do
+            if [[ "$file" = s3://* ]]
+            then
+                filename=`basename "$file"`
+                gsutil cp "$file" "$filename"
+                echo "$filename" >> importedfilelist.txt
+            else
+                echo "$file" >> importedfilelist.txt
+            fi
+        done
+    >>>
+
+    runtime {
+        docker: "google/cloud-sdk:latest"
+        memory: "4GB"
+    }
+
+    output {
+        Array[File] fastq_files_out = read_lines("importedfilelist.txt")
+    }
+}
+
 task DummyFASTQToVCF {
 
     input {
@@ -37,17 +81,22 @@ workflow DummyFASTQToVCFWorkflow {
     }
     
     input {
-        Array[File] fastq_files
+        Array[String] fastq_files
         File source_vcf
         String output_vcfname
+    }
+
+    call ImportFilesFromWasabi {
+        input:
+            fastq_files_in = fastq_files
     }
     
     call DummyFASTQToVCF { 
         input: 
-            fastq_files = fastq_files, 
+            fastq_files = ImportFilesFromWasabi.fastq_files_out, 
             source_vcf = source_vcf, 
             output_vcfname = output_vcfname 
-        }
+    }
 
     output {
         File output_vcf = DummyFASTQToVCF.output_vcf
