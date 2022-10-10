@@ -18,7 +18,7 @@ task ImportFilesFromWasabi {
         echo -n "aws_access_key_id = " >> ~/.boto
         cat /tmp/accesskey >> ~/.boto
         echo "" >> ~/.boto
-        echo "aws_secret_access_key = " >> ~/.boto
+        echo -n "aws_secret_access_key = " >> ~/.boto
         cat /tmp/secretkey >> ~/.boto
         echo "" >> ~/.boto
         echo "s3_host = s3.us-east-1.wasabisys.com" >> ~/.boto
