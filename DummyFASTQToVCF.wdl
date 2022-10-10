@@ -30,11 +30,9 @@ task ImportFilesFromWasabi {
             then
                 filename=$(basename "$file")
                 gsutil cp -n "$file" "$filename"
-                echo -n "$filename" >> importedfilelist.txt
-                echo -n " " >> importedfilelist.txt
+                echo -n "$filename " >> importedfilelist.txt
             else
-                echo -n "$file" >> importedfilelist.txt
-                echo -n " " >> importedfilelist.txt
+                echo -n "$file " >> importedfilelist.txt
             fi
         done
     >>>
