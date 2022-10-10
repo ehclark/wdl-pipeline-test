@@ -35,6 +35,7 @@ task ImportFilesFromWasabi {
                 echo -n "$file " >> importedfilelist.txt
             fi
         done
+        cat importedfilelist.txt
     >>>
 
     runtime {
