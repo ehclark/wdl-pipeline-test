@@ -26,16 +26,10 @@ task ImportFilesFromWasabi {
         # for each input file
         for file in ~{sep=' ' fastq_files_in}
         do
-            if [[ "$file" = s3://* ]]
-            then
-                filename=$(basename "$file")
-                gsutil cp -n "$file" "$filename"
-                echo -n "$filename " >> importedfilelist.txt
-            else
-                echo -n "$file " >> importedfilelist.txt
-            fi
+            filename=$(basename "$file")
+            gsutil cp -n "$file" "$filename"
         done
-        cat importedfilelist.txt
+        ls -al
     >>>
 
     runtime {
@@ -44,7 +38,7 @@ task ImportFilesFromWasabi {
     }
 
     output {
-        Array[File] fastq_files_out = glob(read_string("importedfilelist.txt"))
+        Array[File] fastq_files_out = glob("*.fastq")
     }
 }
 
