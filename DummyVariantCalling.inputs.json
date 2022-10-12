@@ -1,0 +1,6 @@
+{
+    "DummyVariantCallingWorkflow.cram_file": "URL of CRAM file in Wasabi",
+    "DummyVariantCallingWorkflow.source_vcf": "Source VCF file",
+    "DummyVariantCallingWorkflow.output_vcfname": "Output VCF file",
+    "DummyVariantCallingWorkflow.output_dir": "Output location in Wasabi"
+}
