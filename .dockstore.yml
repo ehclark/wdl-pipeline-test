@@ -10,3 +10,13 @@ workflows:
     primaryDescriptorPath: /DummyFASTQToVCF.wdl
     testParameterFiles:
     - /DummyFASTQToVCF.inputs.json
+  - name: DummyVariantCallingWorkflow
+    subclass: WDL
+    primaryDescriptorPath: /DummyVariantCalling.wdl
+    testParameterFiles:
+    - /DummyVariantCalling.inputs.json
+  - name: GetCRAMsFromBroadTerraWorkflow
+    subclass: WDL
+    primaryDescriptorPath: /GetCRAMsFromBroadTerra.wdl
+    testParameterFiles:
+    - /GetCRAMsFromBroadTerra.inputs.json
