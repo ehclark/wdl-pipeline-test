@@ -26,4 +26,8 @@ workflow GetCRAMsFromBroadTerraWorkflow {
             target_dir = "s3://" + wasabi_bucket_name + wasabi_bucket_path_prefix + run_id + wasabi_bucket_path_suffix,
             no_clobber = true
     }
+
+    output {
+        Array[String] transferred_files = CopyFilesToWasabiTask.target_files
+    }
 }
