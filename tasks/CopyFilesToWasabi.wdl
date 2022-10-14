@@ -13,6 +13,8 @@ task CopyFilesToWasabiTask {
 
     command <<<
         set -euxo pipefail
+        # output gcloud info as diagnostic
+        gcloud info
         # get the wasabi api secrets
         gcloud --project="mgb-lmm-gcp-infrast-1651079146" secrets versions access "latest" --secret=mgb-lmm-wasabi-access-key --out-file=/tmp/accesskey
         gcloud --project="mgb-lmm-gcp-infrast-1651079146" secrets versions access "latest" --secret=mgb-lmm-wasabi-secret-key --out-file=/tmp/secretkey
