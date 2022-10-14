@@ -36,10 +36,13 @@ workflow DummyVariantCallingWorkflow {
     }
     
     input {
+        String sample_id
+        String run_id
         String cram_file
         File source_vcf
-        String output_vcfname
-        String output_dir
+        String wasabi_bucket_name = "gcp-integration-test"
+        String wasabi_bucket_path_prefix = "/runs/"
+        String wasabi_bucket_path_suffix = "/vcfs/"
     }
 
     call CopyFilesFromWasabi.CopyFilesFromWasabiTask {
@@ -51,13 +54,13 @@ workflow DummyVariantCallingWorkflow {
         input: 
             cram_file = CopyFilesFromWasabiTask.target_files[0], 
             source_vcf = source_vcf, 
-            output_vcfname = output_vcfname 
+            output_vcfname = sample_id + '.vcf'
     }
 
     call CopyFilesToWasabi.CopyFilesToWasabiTask {
         input:
             source_files = [DummyVariantCalling.output_vcf],
-            target_dir = output_dir
+            target_dir = 's3://' + wasabi_bucket_name + wasabi_bucket_path_prefix + run_id + wasabi_bucket_path_suffix
     }
 
     output {
