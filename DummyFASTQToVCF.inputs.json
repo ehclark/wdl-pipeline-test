@@ -1,6 +1,0 @@
-{
-    "DummyFASTQToVCFWorkflow.fastq_files": ["List of FASTQ files in Wasabi"],
-    "DummyFASTQToVCFWorkflow.source_vcf": "Source VCF file",
-    "DummyFASTQToVCFWorkflow.output_vcfname": "Output VCF file",
-    "DummyFASTQToVCFWorkflow.output_dir": "Output location in Wasabi"
-}

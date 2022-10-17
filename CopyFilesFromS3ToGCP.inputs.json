@@ -1,5 +1,0 @@
-{
-    "CopyFilesFromS3ToGCPWorkflow.project_name": "My Google Project",
-    "CopyFilesFromS3ToGCPWorkflow.source_url": "Source File in S3",
-    "CopyFilesFromS3ToGCPWorkflow.target_url": "Target Directory in GCP"
-}

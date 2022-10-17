@@ -1,15 +1,5 @@
 version: 1.2
 workflows:
-  - name: CopyFilesFromS3ToGCPWorkflow
-    subclass: WDL
-    primaryDescriptorPath: /CopyFilesFromS3ToGCP.wdl
-    testParameterFiles:
-    - /CopyFilesFromS3ToGCP.inputs.json
-  - name: DummyFASTQToVCFWorkflow
-    subclass: WDL
-    primaryDescriptorPath: /DummyFASTQToVCF.wdl
-    testParameterFiles:
-    - /DummyFASTQToVCF.inputs.json
   - name: DummyVariantCallingWorkflow
     subclass: WDL
     primaryDescriptorPath: /DummyVariantCalling.wdl
