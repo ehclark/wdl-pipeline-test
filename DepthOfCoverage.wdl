@@ -52,8 +52,8 @@ workflow DepthOfCoverageWorkflow {
                 ref_dict = ref_dict,
                 bam = bam,
                 bai = bai,
-                bed = roi_gene.roi_bed,
-                refseq_genes = roi_gene.ref_gene,
+                roi_bed = roi_gene.roi_bed,
+                ref_gene = roi_gene.ref_gene,
                 gatk_max_heap_gb = gatk_max_heap_gb,
                 gatk_disk_size_gb = gatk_disk_size_gb
         }
