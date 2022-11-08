@@ -10,3 +10,8 @@ workflows:
     primaryDescriptorPath: /GetCRAMsFromBroadTerra.wdl
     testParameterFiles:
     - /GetCRAMsFromBroadTerra.inputs.json
+  - name: DepthOfCoverageWorkflow
+    subclass: WDL
+    primaryDescriptorPath: /DepthOfCoverage.wdl
+    testParameterFiles:
+    - /DummyVariantCalling.inputs.json
