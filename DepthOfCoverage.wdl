@@ -245,7 +245,7 @@ task DepthOfCoverageSummary {
     >>>
 
     runtime {
-        docker: "mgbpmbiofx/base:latest"
+        docker: "gcr.io/mgb-lmm-gcp-infrast-1651079146/mgbpmbiofx/base:latest"
         memory: "4GB"
     }
 
