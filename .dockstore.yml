@@ -15,3 +15,8 @@ workflows:
     primaryDescriptorPath: /DepthOfCoverage.wdl
     testParameterFiles:
     - /DummyVariantCalling.inputs.json
+  - name: GCRConnectivityTestWorkflow
+    subclass: WDL
+    primaryDescriptorPath: /GCRConnectivityTest.wdl
+    testParameterFiles:
+    - /GCRConnectivityTest.inputs.json
