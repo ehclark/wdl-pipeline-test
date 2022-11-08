@@ -196,7 +196,7 @@ task DepthOfCoverageBED {
             -R "~{ref_fasta}" \
             -dt BY_SAMPLE -dcov 1000 -l INFO --omitDepthOutputAtEachBase --minBaseQuality 10 --minMappingQuality 17 --countType COUNT_FRAGMENTS_REQUIRE_SAME_BASE \
             --printBaseCounts \
-            -o "cov_out/~{sample_name}.cov.refg${refg}" \
+            -o "cov_out/~{sample_name}.cov.refg~{refg_idx}" \
             -L "~{roi_bed}" \
             --calculateCoverageOverGenes:REFSEQ "~{ref_gene}"
         ls -l cov_out
