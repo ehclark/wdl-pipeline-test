@@ -13,6 +13,7 @@ workflow DepthOfCoverageWorkflow {
         Array[RoiAndRefGeneFilePair] roi_genes
         File gene_names
         Int gatk_max_heap_gb = 31
+        Int gatk_disk_size_gb = 20
     }
 
     if (wes_or_wgs == "WGS") {
@@ -24,7 +25,8 @@ workflow DepthOfCoverageWorkflow {
                 ref_dict = ref_dict,
                 bam = bam,
                 bai = bai,
-                gatk_max_heap_gb = gatk_max_heap_gb
+                gatk_max_heap_gb = gatk_max_heap_gb,
+                gatk_disk_size_gb = gatk_disk_size_gb
         }
     }
 
@@ -37,7 +39,8 @@ workflow DepthOfCoverageWorkflow {
             bam = bam,
             bai = bai,
             bed = roi_all_bed,
-            gatk_max_heap_gb = gatk_max_heap_gb
+            gatk_max_heap_gb = gatk_max_heap_gb,
+            gatk_disk_size_gb = gatk_disk_size_gb
     }
 
     scatter (roi_gene in roi_genes) {
@@ -51,7 +54,8 @@ workflow DepthOfCoverageWorkflow {
                 bai = bai,
                 bed = roi_gene.roi_bed,
                 refseq_genes = roi_gene.ref_gene,
-                gatk_max_heap_gb = gatk_max_heap_gb
+                gatk_max_heap_gb = gatk_max_heap_gb,
+                gatk_disk_size_gb = gatk_disk_size_gb
         }
     }
 
@@ -94,6 +98,7 @@ task DepthOfCoverageTaskNOBED {
         File bam
         File bai
         Int gatk_max_heap_gb
+        Int gatk_disk_size_gb
     }
 
     command <<<
@@ -111,6 +116,8 @@ task DepthOfCoverageTaskNOBED {
     runtime {
         docker: "broadinstitute/gatk3:3.7-0"
         memory: "~{gatk_max_heap_gb + 4}GB"
+        cpu: floor(gatk_max_heap_gb / 4)
+        disks: "local-disk ~{gatk_disk_size_gb} SSD"
     }
 
     output {
@@ -129,6 +136,7 @@ task DepthOfCoverageTaskWGSROI {
         File bai
         File bed
         Int gatk_max_heap_gb
+        Int gatk_disk_size_gb
     }
 
     command <<<
@@ -147,6 +155,8 @@ task DepthOfCoverageTaskWGSROI {
     runtime {
         docker: "broadinstitute/gatk3:3.7-0"
         memory: "~{gatk_max_heap_gb + 4}GB"
+        cpu: floor(gatk_max_heap_gb / 4)
+        disks: "local-disk ~{gatk_disk_size_gb} SSD"
     }
 
     output {
@@ -171,6 +181,7 @@ task DepthOfCoverageBED {
         File bed
         File refseq_genes
         Int gatk_max_heap_gb
+        Int gatk_disk_size_gb
     }
 
     command <<<
@@ -192,6 +203,8 @@ task DepthOfCoverageBED {
     runtime {
         docker: "broadinstitute/gatk3:3.7-0"
         memory: "~{gatk_max_heap_gb + 4}GB"
+        cpu: floor(gatk_max_heap_gb / 4)
+        disks: "local-disk ~{gatk_disk_size_gb} SSD"
     }
 
     output {
