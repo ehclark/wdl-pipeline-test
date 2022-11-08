@@ -111,6 +111,7 @@ task DepthOfCoverageTaskNOBED {
             -dt BY_SAMPLE -dcov 1000 -l INFO --omitDepthOutputAtEachBase --omitLocusTable --minBaseQuality 10 --minMappingQuality 17 --countType COUNT_FRAGMENTS_REQUIRE_SAME_BASE \
             -o "cov_out/~{sample_name}.cov.nobed" \
             -omitIntervals
+        ls -l cov_out
     >>>
 
     runtime {
@@ -150,6 +151,7 @@ task DepthOfCoverageTaskWGSROI {
             --printBaseCounts \
             -o "cov_out/~{sample_name}.cov.roibed" \
             -L "~{bed}"
+        ls -l cov_out
     >>>
 
     runtime {
@@ -198,6 +200,7 @@ task DepthOfCoverageBED {
             -o "cov_out/~{sample_name}.cov.refg${refg}" \
             -L "~{bed}" \
             --calculateCoverageOverGenes:REFSEQ "~{refseq_genes}"
+        ls -l cov_out
     >>>
 
     runtime {
@@ -208,13 +211,14 @@ task DepthOfCoverageBED {
     }
 
     output {
-        File sample_gene_summary = "cov_out/~{sample_name}.cov.refg" + read_string("refg.txt") + ".sample_gene_summary"
-        File sample_interval_summary = "cov_out/~{sample_name}.cov.refg" + read_string("refg.txt") + ".sample_interval_summary"
-        File sample_interval_statistics = "cov_out/~{sample_name}.cov.refg" + read_string("refg.txt") + ".sample_interval_statistics"
-        File sample_statistics = "cov_out/~{sample_name}.cov.refg" + read_string("refg.txt") + ".sample_statistics"
-        File sample_summary = "cov_out/~{sample_name}.cov.refg" + read_string("refg.txt") + ".sample_summary"
-        File sample_cumulative_coverage_counts = "cov_out/~{sample_name}.cov.refg" + read_string("refg.txt") + ".sample_cumulative_coverage_counts"
-        File sample_cumulative_coverage_proportions = "cov_out/~{sample_name}.cov.refg" + read_string("refg.txt") + ".sample_cumulative_coverage_proportions"
+        String refg = read_string("refg.txt")
+        File sample_gene_summary = "cov_out/~{sample_name}.cov.refg~{refg}.sample_gene_summary"
+        File sample_interval_summary = "cov_out/~{sample_name}.cov.refg~{refg}.sample_interval_summary"
+        File sample_interval_statistics = "cov_out/~{sample_name}.cov.refg~{refg}.sample_interval_statistics"
+        File sample_statistics = "cov_out/~{sample_name}.cov.refg~{refg}.sample_statistics"
+        File sample_summary = "cov_out/~{sample_name}.cov.refg~{refg}.sample_summary"
+        File sample_cumulative_coverage_counts = "cov_out/~{sample_name}.cov.refg~{refg}.sample_cumulative_coverage_counts"
+        File sample_cumulative_coverage_proportions = "cov_out/~{sample_name}.cov.refg~{refg}.sample_cumulative_coverage_proportions"
     }
 }
 
