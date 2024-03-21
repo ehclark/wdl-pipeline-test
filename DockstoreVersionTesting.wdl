@@ -2,6 +2,7 @@ version 1.0
 
 # new comment
 # another comment
+# yet another comment
 workflow DockstoreVersionTestingWorkflow {
     input {
         String image
