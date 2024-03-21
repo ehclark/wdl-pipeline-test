@@ -25,6 +25,6 @@ workflows:
     primaryDescriptorPath: /DockstoreVersionTesting.wdl
     filters:
       branches:
-        - **
+        - /.*[a-zA-Z0-9].*/
       tags:
         - VERTEST_*
