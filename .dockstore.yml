@@ -27,4 +27,4 @@ workflows:
       branches:
         - main
       tags:
-        - VTEST_*
+        - VERTEST_*
