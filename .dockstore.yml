@@ -24,7 +24,5 @@ workflows:
     subclass: WDL
     primaryDescriptorPath: /DockstoreVersionTesting.wdl
     filters:
-      branches:
-        - main
       tags:
         - VERTEST_*
