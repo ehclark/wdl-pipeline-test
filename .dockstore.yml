@@ -23,3 +23,8 @@ workflows:
   - name: DockstoreVersionTesting
     subclass: WDL
     primaryDescriptorPath: /DockstoreVersionTesting.wdl
+    filters:
+      branches:
+        - main
+      tags:
+        - VTEST_*
