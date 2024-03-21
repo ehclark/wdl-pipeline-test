@@ -20,3 +20,6 @@ workflows:
     primaryDescriptorPath: /RuntimeOptionsTest.wdl
     testParameterFiles:
     - /RuntimeOptionsTest.inputs.json
+  - name: DockstoreVersionTesting
+    subclass: WDL
+    primaryDescriptorPath: /DockstoreVersionTesting.wdl
